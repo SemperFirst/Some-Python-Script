@@ -1,6 +1,6 @@
 import pymysql
 #连接数据库
-conn=pymysql.connect('localhost',user="root",passwd="123456",db="pythontest")
+conn=pymysql.connect('localhost',user="root",passwd="",db="pythontest")
 
 try:
     #创建游标
