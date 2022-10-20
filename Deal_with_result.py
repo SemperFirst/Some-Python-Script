@@ -1,6 +1,6 @@
 import random
 import re
-
+import json
 import pymysql
 import requests
 import lxml
@@ -32,15 +32,28 @@ def requests_headers():
     'Upgrade-Insecure-Requests':'1','Connection':'keep-alive','Cache-Control':'max-age=0',
     'Accept-Encoding':'gzip, deflate, sdch','Accept-Language':'zh-CN,zh;q=0.8',
     "Referer": "http://www.baidu.com/link?url=www.so.com&url=www.soso.com&&url=www.sogou.com",
-    'cookie':'user=%7B%22loginTime%22%3A1666083848785%2C%22token%22%3A%22eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZGRUaW1lIjoxNjY2MDgzODQ4Nzg0LCJlbWFpbCI6IjM3MzA1MjQyM0BxcS5jb20ifQ.qMW00pRgsELt0sX6NKvt2XD95DM5dlHTeGgNg-blbuA%22%2C%22user%22%3A%7B%22activate%22%3A0%2C%22certNumber%22%3A%22%22%2C%22detection%22%3A10%2C%22email%22%3A%22373052423%40qq.com%22%2C%22fingerIntegral%22%3A0.00%2C%22fingerprintNum%22%3A0%2C%22id%22%3A2906%2C%22integral%22%3A0.00%2C%22issueAvailable%22%3A0%2C%22issueTotal%22%3A0%2C%22level%22%3A1%2C%22loginTime%22%3A1665561447000%2C%22nickname%22%3A%22%E6%B2%B9%E7%82%B8%E9%B8%A1%E7%B1%B3%E8%8A%B1%22%2C%22pocAvailable%22%3A0%2C%22pocIntegral%22%3A0.00%2C%22pocTotal%22%3A0%2C%22pocTotalIntegral%22%3A0.00%2C%22portrait%22%3A%22%22%2C%22rangeAvailable%22%3A0%2C%22rangeTotal%22%3A0%2C%22thirdPartyId%22%3A0%2C%22totalFingerIntegral%22%3A0.00%2C%22totalIntegral%22%3A0.00%7D%7D'
+    'cookie':'user=%7B%22loginTime%22%3A1666262157254%2C%22token%22%3A%22eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZGRUaW1lIjoxNjY2MjYyMTU3MjU0LCJlbWFpbCI6IjM3MzA1MjQyM0BxcS5jb20ifQ.dI4Wj1H3Hi6CurVWz9enaaFb2yDZpANt_BQz2oGEs7Q%22%2C%22user%22%3A%7B%22activate%22%3A0%2C%22certNumber%22%3A%22%22%2C%22detection%22%3A10%2C%22email%22%3A%22373052423%40qq.com%22%2C%22fingerIntegral%22%3A0.00%2C%22fingerprintNum%22%3A0%2C%22id%22%3A2906%2C%22integral%22%3A0.00%2C%22issueAvailable%22%3A0%2C%22issueTotal%22%3A0%2C%22level%22%3A1%2C%22loginTime%22%3A1665561447000%2C%22nickname%22%3A%22%E6%B2%B9%E7%82%B8%E9%B8%A1%E7%B1%B3%E8%8A%B1%22%2C%22pocAvailable%22%3A0%2C%22pocIntegral%22%3A0.00%2C%22pocTotal%22%3A0%2C%22pocTotalIntegral%22%3A0.00%2C%22portrait%22%3A%22%22%2C%22rangeAvailable%22%3A0%2C%22rangeTotal%22%3A0%2C%22thirdPartyId%22%3A0%2C%22totalFingerIntegral%22%3A0.00%2C%22totalIntegral%22%3A0.00%7D%7D'  ,'Content-Type':'application/json'
 }
     return headers
 
 
 if __name__ == '__main__':
-    rows=[]
-    url='https://fp.shuziguanxing.com/#/fingerprintList'
-    html=requests.get(url=url,headers=requests_headers()).text
+
+    name = []
+    website = []
+    data = {"pageBasic": {"pageNum":1, "numPerPage": 10},
+            "appInfoWhere": {"likeName": None, "category": None, "searchType": 0}}
+    url = 'https://fp.shuziguanxing.com/fp/appInfo/repertory'
+    res = requests.post(url=url, headers=requests_headers(), data=json.dumps(data)).text
+    context = json.loads(res)
+    for result in context['info']['result']:
+        name.append(result['name'])
+        website.append(result['website'])
+    dic=dict(zip(name,website))
+    print(dic)
+
+""""
+    网页内容前后端分离需要抓取api解析
     soup=BeautifulSoup(html,"html.parser")
     print(soup.prettify())
     #找到网页的表格
@@ -56,3 +69,4 @@ if __name__ == '__main__':
         discrib=data[3].getText()
         rows.append([data,name,kind,company,discrib])
     print(rows)
+"""
