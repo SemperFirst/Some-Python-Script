@@ -1,3 +1,4 @@
+#爬取某网站高校对应网站
 import requests
 import random
 import json
