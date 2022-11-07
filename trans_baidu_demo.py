@@ -21,8 +21,8 @@ class trans_baidu_demo:
             'Content-Type': 'application/x-www-form-urlencoded'
         }
         # Set your own appid/appkey.
-        self.appid = '20221013001390820'
-        self.appkey = 'QaauYH2crzb8xL2_KMIw'
+        self.appid = ''
+        self.appkey = ''
 
     def get_md5(self, sign):
         md5 = hashlib.md5()
