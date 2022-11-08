@@ -23,9 +23,7 @@ def deal(content):
 
 if __name__ == '__main__':
 
-    conn = pymysql.connect(host='10.50.24.152', port=3308, user='root', passwd='bdwOgW5p1dUfyINu',
-                           db='fingerprint_feature',
-                           cursorclass=pymysql.cursors.DictCursor)
+    conn = pymysql.connect()
     cursor = conn.cursor()
     rows=get_data(cursor)
     for row in rows:
