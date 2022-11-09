@@ -6,11 +6,11 @@ import re
 class SumapData:
     def __init__(self):
 
-        self.port = 3308
-        self.host = '10.50.24.152'
-        self.user = 'root'
-        self.passwd = 'bdwOgW5p1dUfyINu'
-        self.db = 'fingerprint_feature'
+        self.port = 
+        self.host = ''
+        self.user = ''
+        self.passwd = ''
+        self.db = ''
         self.conn = pymysql.connect(host=self.host,port=self.port,user=self.user,passwd=self.passwd,db=self.db,charset='utf8mb4',cursorclass = pymysql.cursors.DictCursor)
         self.cur = self.conn.cursor()
 
